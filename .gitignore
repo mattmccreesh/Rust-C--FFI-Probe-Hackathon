@@ -1,3 +1,3 @@
-/bin
-/target
-/obj
+bin/
+target/
+obj/
