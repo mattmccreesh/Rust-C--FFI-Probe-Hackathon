@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Text;
 using System.Threading;
 using System.Runtime.InteropServices;
@@ -7,7 +7,7 @@ namespace Ffi{
 
     public class Program
     {
-        public static Dictionary<int, RustProbe> ProbeDict = new Dictionary<int, RustProbe>();
+        public static ConcurrentDictionary<int, RustProbe> ProbeDict = new ConcurrentDictionary<int, RustProbe>();
 
         public static void Main(String[] args)
         {
@@ -24,10 +24,10 @@ namespace Ffi{
             Thread.Sleep(60000);
             p1.UpdateProbeConfig(10);
 
-            // TODO stop probing p1
+            // Stop probing p1 after 1 minute
             Thread.Sleep(60000);
             p1.StopProbing();
-            ProbeDict.Remove(1);
+            ProbeDict.Remove(1, out var _removed);
 
 
             Console.ReadKey();
